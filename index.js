@@ -1,20 +1,25 @@
+require('dotenv').config()
 const express = require('express')
-const pgp = require('pg-promise')()
+const mysql = require('mysql');
 
 const app = express();
 
 const PORT = process.env.PORT || 80;
 
-var db = pgp('postgres://root:project123!@localhost:5542/database')
+const con = mysql.createConnection({
+  host: process.env.HOST,
+  port: process.env.SQL_PORT,
+  user: process.env.SQL_USER,
+  password: process.env.SQL_PASS
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 app.get('/', (req, res) => {
-  db.one('SELECT *', 1)
-  .then((data) => {
-    res.send(data.value)
-  })
-  .catch(function (error) {
-    res.send(error)
-  })
+  res.send('hi')
 });
 
 app.listen(PORT, () => {
