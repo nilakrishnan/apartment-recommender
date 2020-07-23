@@ -13,4 +13,4 @@ CS 411 Project
 	SQL_PASS='PASSWORD'
 	DATABASE='DATABASE_NAME'
 	```
-3. Make sure your db is setup like in db_setup.sql (UserId and ReviewId are VARCHAR(50) instead of INTEGER)
+3. Setup sql databse to match schema described in db_setup.sql
