@@ -38,12 +38,33 @@ app.get('/user', (req, res) => {
 })
 
 app.post('/addUser', (req, res) => {
-  console.log(req.body)
   db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES (003, "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
     res.send('Added new user!')
+  })
+})
+
+app.post('/updateUser', (req, res) => {
+  if (!req.query.userId || !req.query.reviewId) {
+    throw new Error('oops')
+  }
+  db.query(`UPDATE User SET "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Added new user!')
+  })
+})
+
+
+app.post('/deleteUser', (req, res) => {
+  db.query(`DELETE From User WHERE UserId = ${req.body.UserId}`, function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Deleted user!')
   })
 })
 
