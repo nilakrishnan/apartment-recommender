@@ -11,4 +11,5 @@ CS 411 Project
 	SQL_PORT=3306
 	SQL_USER='root'
 	SQL_PASS='insert_your_password'
+	DATABASE='insert_your_database'
 	```

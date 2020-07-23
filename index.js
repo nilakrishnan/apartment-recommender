@@ -2,6 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
+const { v4: uuidv4 } = require('uuid');
+const date = require('date-and-time');
+
 
 const app = express()
 
@@ -38,12 +41,39 @@ app.get('/user', (req, res) => {
 })
 
 app.post('/addUser', (req, res) => {
-  console.log(req.body)
-  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES (003, "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+  console.log(req.body);
+  new_user_uuid = uuidv4();
+  console.log(new_uuid);
+
+  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${new_user_uuid}", "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
     res.send('Added new user!')
+  })
+})
+
+app.post('/addReview', (req, res) => {
+  console.log(req.body);
+  new_uuid_review = uuidv4();
+  console.log("new_uuid_review");
+  console.log(new_uuid_review);
+
+  const now = new Date();
+
+  // yyyy-mm-dd
+  format_date = date.format(now, 'YYYY-MM-DD');
+  console.log("format_date");
+  console.log(format_date);
+
+  db.query(`INSERT INTO Review(ReviewId, Date, Rating, Description, UserId)
+            VALUES ("${new_uuid_review}", "${format_date}", "${req.body.Rating}",
+            "${req.body.Description}", "${req.body.UserId}")`,
+            function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Added new review!')
   })
 })
 
