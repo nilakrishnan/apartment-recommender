@@ -1,25 +1,34 @@
 require('dotenv').config()
 const express = require('express')
-const mysql = require('mysql');
+const bodyParser = require('body-parser')
+const mysql = require('mysql')
 
-const app = express();
+const app = express()
+app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 80;
 
-const con = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.HOST,
   port: process.env.SQL_PORT,
   user: process.env.SQL_USER,
-  password: process.env.SQL_PASS
+  password: process.env.SQL_PASS,
+  database: process.env.DATABASE
 });
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+app.get('/user', (req, res) => {
+  if (!req.query.userId || !req.query.reviewId) {
+    throw new Error('oops')
+  }
+  db.query(`SELECT * FROM User NATURAL JOIN Review WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
+    if (error) {
+      throw error;
+    }
+    res.send(results)
+  });
 });
 
-app.get('/', (req, res) => {
-  res.send('hi')
+app.post('/addUser', (req, res) => {
 });
 
 app.listen(PORT, () => {
