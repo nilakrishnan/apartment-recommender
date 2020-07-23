@@ -2,9 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
-
+const { v4: uuidv4 } = require('uuid');
+const date = require('date-and-time');
 const app = express()
-
 const PORT = process.env.PORT || 80;
 
 const db = mysql.createPool({
@@ -38,7 +38,8 @@ app.get('/user', (req, res) => {
 })
 
 app.post('/addUser', (req, res) => {
-  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES (003, "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+  new_user_uuid = uuidv4();
+  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${new_user_uuid}", "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -65,6 +66,22 @@ app.post('/deleteUser', (req, res) => {
       throw error
     }
     res.send('Deleted user!')
+  })
+})
+
+app.post('/addReview', (req, res) => {
+  new_uuid_review = uuidv4();
+  const now = new Date();
+  format_date = date.format(now, 'YYYY-MM-DD');
+
+  db.query(`INSERT INTO Review(ReviewId, Date, Rating, Description, UserId)
+            VALUES ("${new_uuid_review}", "${format_date}", "${req.body.Rating}",
+            "${req.body.Description}", "${req.body.UserId}")`,
+            function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Added new review!')
   })
 })
 

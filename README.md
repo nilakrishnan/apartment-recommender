@@ -13,3 +13,4 @@ CS 411 Project
 	SQL_PASS='PASSWORD'
 	DATABASE='DATABASE_NAME'
 	```
+3. Setup sql databse to match schema described in db_setup.sql
