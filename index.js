@@ -69,7 +69,7 @@ app.post('/deleteUser', (req, res) => {
   })
 })
 
-// 'd12bc2e9-c41e-49f5-bbc9-c784dc63a96c', 'Anchita', 'Birla'
+// '35e232ef-4981-4b10-ad0e-e15711d8a6d3', 'Anchita', 'Birla'
 
 app.post('/addReview', (req, res) => {
   new_uuid_review = uuidv4();
