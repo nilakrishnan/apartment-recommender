@@ -39,7 +39,7 @@ app.get('/user', (req, res) => {
 
 app.post('/addUser', (req, res) => {
   new_user_uuid = uuidv4();
-  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${new_user_uuid}", "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${new_user_uuid}", "${req.body.firstName}", "${req.body.lastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -51,7 +51,7 @@ app.post('/updateUser', (req, res) => {
   if (!req.query.userId || !req.query.reviewId) {
     throw new Error('oops')
   }
-  db.query(`UPDATE User SET "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+  db.query(`UPDATE User SET "${req.body.firstName}", "${req.body.lastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -61,7 +61,7 @@ app.post('/updateUser', (req, res) => {
 
 
 app.post('/deleteUser', (req, res) => {
-  db.query(`DELETE From User WHERE UserId = ${req.body.UserId}`, function (error, results, fields) {
+  db.query(`DELETE From User WHERE UserId = ${req.body.userId}`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -69,14 +69,21 @@ app.post('/deleteUser', (req, res) => {
   })
 })
 
+// 'd12bc2e9-c41e-49f5-bbc9-c784dc63a96c', 'Anchita', 'Birla'
+
 app.post('/addReview', (req, res) => {
   new_uuid_review = uuidv4();
   const now = new Date();
   format_date = date.format(now, 'YYYY-MM-DD');
 
-  db.query(`INSERT INTO Review(ReviewId, Date, Rating, Description, UserId)
-            VALUES ("${new_uuid_review}", "${format_date}", "${req.body.Rating}",
-            "${req.body.Description}", "${req.body.UserId}")`,
+  db.query(`INSERT INTO Review(ReviewId, Date, ResponsivenessRating,
+            SecurityDepositReturnedRating, WeekdayVolumeRating, WeekendVolumeRating,
+            GreenStProximityRating, TransportationProximity, OverallRating, Description, UserId)
+            VALUES ("${new_uuid_review}", "${format_date}", "${req.body.responsivenessRating}",
+            "${req.body.securityDepositReturnedRating}", "${req.body.weekdayVolumeRating}",
+            "${req.body.weekendVolumeRating}", "${req.body.greenStProximityRating}",
+            "${req.body.transportationProximity}", "${req.body.overallRating}",
+            "${req.body.description}", "${req.body.userId}")`,
             function (error, results, fields) {
     if (error) {
       throw error
@@ -84,6 +91,19 @@ app.post('/addReview', (req, res) => {
     res.send('Added new review!')
   })
 })
+
+app.post('/updateReview', (req, res) => {
+  if (!req.query.userId || !req.query.reviewId) {
+    throw new Error('oops')
+  }
+  db.query(`UPDATE User SET "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Added new user!')
+  })
+})
+
 
 app.listen(PORT, () => {
     console.log('Server started on port', PORT);
