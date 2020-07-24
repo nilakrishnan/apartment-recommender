@@ -12,6 +12,7 @@ PRIMARY KEY (`UserId`)
 
 CREATE TABLE Review (
 ReviewId varchar(50) NOT NULL,
+UserId varchar(50) NOT NULL,
 Date DATE,
 ResponsivenessRating integer,
 SecurityDepositReturnedRating integer,
@@ -21,12 +22,11 @@ GreenStProximityRating integer,
 TransportationProximity integer,
 OverallRating integer,
 Description VARCHAR(500),
-UserId varchar(50) NOT NULL,
 PRIMARY KEY (ReviewId, UserId),
 FOREIGN KEY (UserId) REFERENCES User (UserId)
 );
 
-CREATE TABLE Apt_building (
+CREATE TABLE AptBuilding (
 BuildingId VARCHAR(50),
 BuildingName varchar(70) ,
 Address varchar(70),
@@ -48,14 +48,14 @@ FOREIGN KEY (BuildingId) REFERENCES Apt_building (BuildingId)
 
 CREATE TABLE Amenities (
 BuildingId varchar(50) NOT NULL,
+AmenitiesId varchar(50) NOT NULL,
 Elevator tinyint(1),
 Pool tinyint(1),
 Parking tinyint(1),
 Internet tinyint(1),
 Gym tinyint(1),
 WasherDryer tinyint(1),
-AmenitiesId varchar(50) NOT NULL,
-Security varchar(50) NOT NULL,
+Security varchar(50),
 PRIMARY KEY (AmenitiesId),
 FOREIGN KEY (BuildingId) REFERENCES Apt_building (BuildingId)
 );
