@@ -27,23 +27,23 @@ FOREIGN KEY (UserId) REFERENCES User (UserId)
 );
 
 CREATE TABLE AptBuilding (
-BuildingId VARCHAR(50),
-BuildingName varchar(70) ,
+BuildingId VARCHAR(50) NOT NULL,
+BuildingName varchar(70),
 Address varchar(70),
 Company VARCHAR(500),
 PRIMARY KEY (BuildingId)
 );
 
 CREATE TABLE Apartment (
-AptId VARCHAR(50),
+AptId VARCHAR(50) NOT NULL,
+BuildingId VARCHAR(50) NOT NULL,
 Price INTEGER,
 AptNumber INTEGER,
 NumBeds INTEGER,
 NumBaths INTEGER,
 BuildingName VARCHAR(50),
-BuildingId VARCHAR(50),
 PRIMARY KEY (AptId, BuildingId),
-FOREIGN KEY (BuildingId) REFERENCES Apt_building (BuildingId)
+FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
 );
 
 CREATE TABLE Amenities (
@@ -57,7 +57,7 @@ Gym tinyint(1),
 WasherDryer tinyint(1),
 Security varchar(50),
 PRIMARY KEY (AmenitiesId),
-FOREIGN KEY (BuildingId) REFERENCES Apt_building (BuildingId)
+FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
 );
 
 /*
