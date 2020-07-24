@@ -25,10 +25,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/user', (req, res) => {
-  if (!req.query.userId || !req.query.reviewId) {
-    throw new Error('oops')
-  }
+app.get('/getUser', (req, res) => {
   db.query(`SELECT * FROM User NATURAL JOIN Review WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
     if (error) {
       throw error;
@@ -78,18 +75,9 @@ app.post('/deleteUser', (req, res) => {
     }
     res.send('Deleted user reviews!')
   })
-
-  db.query(`DELETE From User WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
-    if (error) {
-      throw error
-    }
-    res.send('Deleted user!')
-  })
   // have to delete the reviews all the reviews first!
   // TODO: if we delete a user does that delete all their reviews??
   // '03717f3a-b224-4e65-9322-234b245467f7', 'John', 'Smith'
-
-
 })
 
 app.post('/addReview', (req, res) => {

@@ -1,5 +1,4 @@
-USE apartments_test;
-
+USE apartmentdata;
 DROP TABLE IF EXISTS Review;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Apartment;
