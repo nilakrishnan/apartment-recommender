@@ -47,29 +47,53 @@ app.post('/addUser', (req, res) => {
   })
 })
 
+// TODO
 app.post('/updateUser', (req, res) => {
-  if (!req.query.userId || !req.query.reviewId) {
-    throw new Error('oops')
+
+  if (!req.body.userId) {
+    throw new Error('we need the userId!')
   }
-  db.query(`UPDATE User SET "${req.body.firstName}", "${req.body.lastName}")`, function (error, results, fields) {
+
+  for (const [key, value] of Object.entries(req.body)) {
+    // console.log(`${key}: ${value}`);
+    if (`${key}` === "firstName") {
+      db.query(`UPDATE User SET FirstName = "${req.body.firstName}" WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "lastName") {
+      db.query(`UPDATE User SET LastName = "${req.body.lastName}" WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    }
+  }
+
+  res.send("user updated!")
+})
+
+app.post('/deleteUser', (req, res) => {
+  db.query(`DELETE From Review WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
     if (error) {
       throw error
     }
-    res.send('Added new user!')
+    res.send('Deleted user reviews!')
   })
-})
 
-
-app.post('/deleteUser', (req, res) => {
-  db.query(`DELETE From User WHERE UserId = ${req.body.userId}`, function (error, results, fields) {
+  db.query(`DELETE From User WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
     if (error) {
       throw error
     }
     res.send('Deleted user!')
   })
-})
+  // have to delete the reviews all the reviews first!
+  // TODO: if we delete a user does that delete all their reviews??
+  // '03717f3a-b224-4e65-9322-234b245467f7', 'John', 'Smith'
 
-// '35e232ef-4981-4b10-ad0e-e15711d8a6d3', 'Anchita', 'Birla'
+
+})
 
 app.post('/addReview', (req, res) => {
   new_uuid_review = uuidv4();
@@ -92,15 +116,18 @@ app.post('/addReview', (req, res) => {
   })
 })
 
+// TODO
 app.post('/updateReview', (req, res) => {
-  if (!req.query.userId || !req.query.reviewId) {
-    throw new Error('oops')
-  }
-  db.query(`UPDATE User SET "${req.body.FirstName}", "${req.body.LastName}")`, function (error, results, fields) {
+
+
+})
+
+app.post('/deleteReview', (req, res) => {
+  db.query(`DELETE From Review WHERE ReviewId = ${req.body.reviewId}`, function (error, results, fields) {
     if (error) {
       throw error
     }
-    res.send('Added new user!')
+    res.send('Deleted review!')
   })
 })
 
