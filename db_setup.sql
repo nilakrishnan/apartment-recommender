@@ -2,28 +2,15 @@ USE apartments_test;
 
 DROP TABLE IF EXISTS Review;
 DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Apartment;
+DROP TABLE IF EXISTS Amenities;
+DROP TABLE IF EXISTS AptBuilding;
 
 CREATE TABLE User (
 UserId VARCHAR(50) NOT NULL,
 FirstName VARCHAR(50) NOT NULL,
 LastName VARCHAR(50) NOT NULL,
 PRIMARY KEY (UserId)
-);
-
-CREATE TABLE Review (
-ReviewId varchar(50) NOT NULL,
-UserId varchar(50) NOT NULL,
-Date DATE,
-ResponsivenessRating integer,
-SecurityDepositReturnedRating integer,
-WeekdayVolumeRating integer,
-WeekendVolumeRating integer,
-GreenStProximityRating integer,
-TransportationProximity integer,
-OverallRating integer,
-Description VARCHAR(500),
-PRIMARY KEY (ReviewId, UserId),
-FOREIGN KEY (UserId) REFERENCES User (UserId)
 );
 
 CREATE TABLE AptBuilding (
@@ -44,6 +31,24 @@ NumBaths INTEGER,
 BuildingName VARCHAR(50),
 PRIMARY KEY (AptId, BuildingId),
 FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
+);
+
+CREATE TABLE Review (
+ReviewId varchar(50) NOT NULL,
+UserId varchar(50) NOT NULL,
+AptId varchar(50) NOT NULL,
+Date DATE,
+ResponsivenessRating integer,
+SecurityDepositReturnedRating integer,
+WeekdayVolumeRating integer,
+WeekendVolumeRating integer,
+GreenStProximityRating integer,
+TransportationProximity integer,
+OverallRating integer,
+Description VARCHAR(500),
+PRIMARY KEY (ReviewId, UserId),
+FOREIGN KEY (UserId) REFERENCES User (UserId),
+FOREIGN KEY (AptId) REFERENCES Apartment (AptId)
 );
 
 CREATE TABLE Amenities (
