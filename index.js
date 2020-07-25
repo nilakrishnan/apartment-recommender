@@ -47,9 +47,7 @@ app.post('/addUser', (req, res) => {
   })
 })
 
-// TODO
 app.post('/updateUser', (req, res) => {
-
   if (!req.body.userId) {
     throw new Error('we need the userId!')
   }
@@ -70,7 +68,6 @@ app.post('/updateUser', (req, res) => {
       })
     }
   }
-
   res.send("user updated!")
 })
 
@@ -100,14 +97,14 @@ app.post('/addReview', (req, res) => {
   const now = new Date();
   format_date = date.format(now, 'YYYY-MM-DD');
 
-  db.query(`INSERT INTO Review(ReviewId, Date, ResponsivenessRating,
+  db.query(`INSERT INTO Review(ReviewId, UserId, AptId, Date, ResponsivenessRating,
             SecurityDepositReturnedRating, WeekdayVolumeRating, WeekendVolumeRating,
-            GreenStProximityRating, TransportationProximity, OverallRating, Description, UserId)
-            VALUES ("${new_uuid_review}", "${format_date}", "${req.body.responsivenessRating}",
-            "${req.body.securityDepositReturnedRating}", "${req.body.weekdayVolumeRating}",
-            "${req.body.weekendVolumeRating}", "${req.body.greenStProximityRating}",
-            "${req.body.transportationProximity}", "${req.body.overallRating}",
-            "${req.body.description}", "${req.body.userId}")`,
+            GreenStProximityRating, TransportationProximity, OverallRating, Description)
+            VALUES ("${new_uuid_review}", "${req.body.userId}", "${req.body.aptId}", "${format_date}",
+            "${req.body.responsivenessRating}", "${req.body.securityDepositReturnedRating}",
+            "${req.body.weekdayVolumeRating}", "${req.body.weekendVolumeRating}",
+            "${req.body.greenStProximityRating}", "${req.body.transportationProximity}",
+            "${req.body.overallRating}", "${req.body.description}")`,
             function (error, results, fields) {
     if (error) {
       throw error
@@ -116,10 +113,63 @@ app.post('/addReview', (req, res) => {
   })
 })
 
-// TODO
 app.post('/updateReview', (req, res) => {
+  if (!req.body.reviewId) {
+    throw new Error('we need the ReviewId!')
+  }
 
-
+  for (const [key, value] of Object.entries(req.body)) {
+    if (`${key}` === "responsivenessRating") {
+      db.query(`UPDATE Review SET ResponsivenessRating = "${req.body.responsivenessRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "securityDepositReturnedRating") {
+      db.query(`UPDATE Review SET SecurityDepositReturnedRating = "${req.body.securityDepositReturnedRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "weekdayVolumeRating") {
+      db.query(`UPDATE Review SET WeekdayVolumeRating = "${req.body.weekdayVolumeRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "weekendVolumeRating") {
+      db.query(`UPDATE Review SET WeekendVolumeRating = "${req.body.weekendVolumeRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "greenStProximityRating") {
+      db.query(`UPDATE Review SET GreenStProximityRating = "${req.body.greenStProximityRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "transportationProximity") {
+      db.query(`UPDATE Review SET TransportationProximity = "${req.body.transportationProximity}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "overallRating") {
+      db.query(`UPDATE Review SET OverallRating = "${req.body.overallRating}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    } else if (`${key}` === "description") {
+      db.query(`UPDATE Review SET Description = "${req.body.description}" WHERE ReviewId = "${req.body.reviewId}"`, function (error, results, fields) {
+        if (error) {
+          throw error
+        }
+      })
+    }
+  }
+  res.send("review updated!")
 })
 
 app.post('/deleteReview', (req, res) => {
