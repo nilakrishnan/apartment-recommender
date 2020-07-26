@@ -2,8 +2,10 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const mysql = require('mysql')
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const date = require('date-and-time');
+
 const app = express()
 const PORT = process.env.PORT || 80;
 
@@ -24,6 +26,10 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/public/index.html'));
+});
 
 app.get('/getUser', (req, res) => {
   db.query(`SELECT * FROM User NATURAL JOIN Review WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
@@ -79,6 +85,8 @@ app.post('/deleteUser', (req, res) => {
   // TODO: if we delete a user does that delete all their reviews??
   // '03717f3a-b224-4e65-9322-234b245467f7', 'John', 'Smith'
 })
+
+//TODO: Add getReview
 
 app.post('/addReview', (req, res) => {
   new_uuid_review = uuidv4();
