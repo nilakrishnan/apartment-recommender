@@ -13,20 +13,20 @@ CREATE TABLE User (
 );
 
 CREATE TABLE AptBuilding (
-BuildingId VARCHAR(50) NOT NULL,
-Address varchar(70),
-Company VARCHAR(500),
-PRIMARY KEY (BuildingId)
+  BuildingId VARCHAR(50) NOT NULL,
+  Address varchar(70),
+  Company VARCHAR(500),
+  PRIMARY KEY (BuildingId)
 );
 
 CREATE TABLE Apartment (
-AptId VARCHAR(50) NOT NULL,
-BuildingId VARCHAR(50) NOT NULL,
-Price INTEGER,
-NumBeds INTEGER,
-NumBaths INTEGER,
-PRIMARY KEY (AptId, BuildingId),
-FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
+  AptId VARCHAR(50) NOT NULL,
+  BuildingId VARCHAR(50) NOT NULL,
+  Price INTEGER,
+  NumBeds INTEGER,
+  NumBaths INTEGER,
+  PRIMARY KEY (AptId, BuildingId),
+  FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
 );
 
 CREATE TABLE Review (
@@ -48,24 +48,24 @@ CREATE TABLE Review (
 );
 
 CREATE TABLE Amenities (
-BuildingId varchar(50) NOT NULL,
-AmenitiesId varchar(50) NOT NULL,
-Internet tinyint(1),
-Parking tinyint(1),
-Gym tinyint(1),
-WheelchairAccessible tinyint(1),
-Elevator tinyint(1),
-Pool tinyint(1),
-WasherDryer tinyint(1),
-SmallPetsAllowed tinyint(1),
-AllPetsAllowed tinyint(1),
-SecuritySystem tinyint(1),
-GameRoom tinyint(1),
-AirConditioned tinyint(1),
-TVIncluded tinyint(1),
-Furnished tinyint(1),
-PRIMARY KEY (AmenitiesId),
-FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
+  BuildingId varchar(50) NOT NULL,
+  AmenitiesId varchar(50) NOT NULL,
+  Internet tinyint(1),
+  Parking tinyint(1),
+  Gym tinyint(1),
+  WheelchairAccessible tinyint(1),
+  Elevator tinyint(1),
+  Pool tinyint(1),
+  WasherDryer tinyint(1),
+  SmallPetsAllowed tinyint(1),
+  AllPetsAllowed tinyint(1),
+  SecuritySystem tinyint(1),
+  GameRoom tinyint(1),
+  AirConditioned tinyint(1),
+  TVIncluded tinyint(1),
+  Furnished tinyint(1),
+  PRIMARY KEY (AmenitiesId),
+  FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
 );
 
 INSERT  INTO User(UserId, FirstName, LastName) VALUES
