@@ -1,42 +1,46 @@
-import React, { useState } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import React from 'react';
+import { withRouter } from 'react-router'
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  handleChange(e) {
+    this.setState({
+      email: e.target.value
+    });
   }
 
-  return (
-    <div className="Login">
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-          />
-        </FormGroup>
-        <Button block bsSize="large" disabled={!validateForm()} type="submit">
-          Login
-        </Button>
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.history.push({
+      pathname: '/account',
+      search: `?userId=${this.state.email}`
+    })
+  }
+
+  render() {
+    return (
+      <form className="Login" onSubmit={this.handleSubmit}>
+          <p>Email
+            <input type="text" name="Email" value={this.state.email} onChange={this.handleChange}/>
+          </p>
+          <p>First Name
+            <input type="text" name="FirstName" />
+          </p>
+          <p>Last Name
+            <input type="text" name="LastName" />
+          </p>
+          <button type="submit" value="Submit"/>
       </form>
-    </div>
-  );
+    );
+  }
 }
+
+export default withRouter(Login);

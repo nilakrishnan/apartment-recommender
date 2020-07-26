@@ -32,7 +32,7 @@ app.get('*', (req, res) => {
 });
 
 app.get('/getUser', (req, res) => {
-  db.query(`SELECT * FROM User NATURAL JOIN Review WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
+  db.query(`SELECT * FROM User WHERE UserId = ${req.query.email}`, function (error, results, fields) {
     if (error) {
       throw error;
     }
@@ -41,8 +41,7 @@ app.get('/getUser', (req, res) => {
 })
 
 app.post('/addUser', (req, res) => {
-  new_user_uuid = uuidv4();
-  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${new_user_uuid}", "${req.body.firstName}", "${req.body.lastName}")`, function (error, results, fields) {
+  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES ("${req.body.userId}", "${req.body.firstName}", "${req.body.lastName}")`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -56,7 +55,6 @@ app.post('/updateUser', (req, res) => {
   }
 
   for (const [key, value] of Object.entries(req.body)) {
-    // console.log(`${key}: ${value}`);
     if (`${key}` === "firstName") {
       db.query(`UPDATE User SET FirstName = "${req.body.firstName}" WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
         if (error) {
@@ -71,7 +69,7 @@ app.post('/updateUser', (req, res) => {
       })
     }
   }
-  res.send("user updated!")
+  res.send("User updated!")
 })
 
 app.post('/deleteUser', (req, res) => {
@@ -79,14 +77,23 @@ app.post('/deleteUser', (req, res) => {
     if (error) {
       throw error
     }
-    res.send('Deleted user reviews!')
+    db.query(`DELETE From User WHERE UserId = "${req.body.userId}"`, function (error, results, fields) {
+      if (error) {
+        throw error
+      }
+      res.send('Deleted user!')
+    })
   })
-  // have to delete the reviews all the reviews first!
-  // TODO: if we delete a user does that delete all their reviews??
-  // '03717f3a-b224-4e65-9322-234b245467f7', 'John', 'Smith'
 })
 
-//TODO: Add getReview
+app.get('/getUserReview', (req, res) => {
+  db.query(`SELECT * FROM Review NATURAL JOIN User WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
+    if (error) {
+      throw error;
+    }
+    res.send(results)
+  })
+})
 
 app.post('/addReview', (req, res) => {
   new_uuid_review = uuidv4();
