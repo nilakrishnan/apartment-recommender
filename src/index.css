@@ -32,3 +32,7 @@ p > input {
   height: 2vh;
   width: 8vw;
 }
+
+.Account {
+  height: 30vh;
+}

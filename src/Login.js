@@ -5,15 +5,31 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
+      firstName: '',
+      lastName: '',
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleFirstChange = this.handleFirstChange.bind(this);
+    this.handleLastChange = this.handleLastChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  handleEmailChange(e) {
     this.setState({
       email: e.target.value
+    });
+  }
+
+  handleFirstChange(e) {
+    this.setState({
+      firstName: e.target.value
+    });
+  }
+
+  handleLastChange(e) {
+    this.setState({
+      lastName: e.target.value
     });
   }
 
@@ -21,7 +37,7 @@ class Login extends React.Component {
     e.preventDefault();
     this.props.history.push({
       pathname: '/account',
-      search: `?userId=${this.state.email}`
+      data: this.state
     })
   }
 
@@ -29,15 +45,15 @@ class Login extends React.Component {
     return (
       <form className="Login" onSubmit={this.handleSubmit}>
           <p>Email
-            <input type="text" name="Email" value={this.state.email} onChange={this.handleChange}/>
+            <input type="text" name="Email" value={this.state.email} onChange={this.handleEmailChange}/>
           </p>
           <p>First Name
-            <input type="text" name="FirstName" />
+            <input type="text" name="FirstName" value={this.state.firstName} onChange={this.handleFirstChange}/>
           </p>
           <p>Last Name
-            <input type="text" name="LastName" />
+            <input type="text" name="LastName" value={this.state.lastName} onChange={this.handleLastChange}/>
           </p>
-          <button type="submit" value="Submit"/>
+          <button type="submit" name="Signup/Login" value="Submit"/>
       </form>
     );
   }

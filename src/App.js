@@ -4,11 +4,7 @@ import Login from './Login.js'
 import Account from './Account.js'
 import Review from './Review.js'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class App extends React.Component {
   render() {
     return (
       <Router>
@@ -23,5 +19,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

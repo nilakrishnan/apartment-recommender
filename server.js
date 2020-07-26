@@ -27,16 +27,12 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/public/index.html'));
-});
-
 app.get('/getUser', (req, res) => {
-  db.query(`SELECT * FROM User WHERE UserId = ${req.query.email}`, function (error, results, fields) {
+  db.query(`SELECT * FROM User WHERE UserId = '${req.query.userId}'`, function (error, results, fields) {
     if (error) {
       throw error;
     }
-    res.send(results)
+    res.status(200).json(results)
   })
 })
 
@@ -87,11 +83,11 @@ app.post('/deleteUser', (req, res) => {
 })
 
 app.get('/getUserReview', (req, res) => {
-  db.query(`SELECT * FROM Review NATURAL JOIN User WHERE UserId = ${req.query.userId}`, function (error, results, fields) {
+  db.query(`SELECT * FROM Review NATURAL JOIN User WHERE UserId = '${req.query.userId}'`, function (error, results, fields) {
     if (error) {
       throw error;
     }
-    res.send(results)
+    res.json(results)
   })
 })
 
