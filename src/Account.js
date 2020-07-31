@@ -20,11 +20,10 @@ class Account extends React.Component {
       if (!user[0]) {
         fetch('/addUser', {
           method: 'POST',
-          body: {
-            "userId": data.email,
-            "firstName": data.firstName,
-            "lastName": data.lastName
-          }
+          body: JSON.stringify({
+            "UserId": data.email,
+            "FirstName": data.firstName,
+            "LastName": data.lastName})
         }).then(res => res.json()).then(newUser => this.setState({
             email: data.email,
             firstName: data.firstName,

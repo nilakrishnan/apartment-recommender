@@ -28,5 +28,5 @@ CS 411 Project
 
 6. Run the application by running the following command:
 	```
-	node server.js
+	yarn start
 	```
