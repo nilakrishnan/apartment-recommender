@@ -122,7 +122,7 @@ app.post('/addReview', (req, res) => {
             "${req.body.ResponsivenessRating}", "${req.body.SecurityDepositReturnedRating}",
             "${req.body.WeekdayVolumeRating}", "${req.body.WeekendVolumeRating}",
             "${req.body.GreenStProximityRating}", "${req.body.TransportationProximity}",
-            "${req.body.OverallRating}", "${req.body.dDscription}")`,
+            "${req.body.OverallRating}", "${req.body.Description}")`,
             function (error, results, fields) {
     if (error) {
       throw error
