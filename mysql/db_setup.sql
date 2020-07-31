@@ -67,13 +67,3 @@ CREATE TABLE Amenities (
   PRIMARY KEY (AmenitiesId),
   FOREIGN KEY (BuildingId) REFERENCES AptBuilding (BuildingId)
 );
-
-INSERT  INTO User(UserId, FirstName, LastName) VALUES
-(001, 'Bob', 'Smith'),
-(002, 'Jane', 'Doe');
-
-INSERT  INTO Review(ReviewId, UserId, Date, ResponsivenessRating, SecurityDepositReturnedRating, WeekdayVolumeRating, WeekendVolumeRating, GreenStProximityRating, TransportationProximity, OverallRating, Description) VALUES
-(001, 001, '2020-07-23', 4, 4, 4, 4, 4, 4, 4, 'This place was great!'),
-(002, 001, '2020-07-22', 2, 2, 1, 2, 2, 3, 2, 'I did not like this apartment that much');
-
-SELECT * FROM User NATURAL JOIN Review
