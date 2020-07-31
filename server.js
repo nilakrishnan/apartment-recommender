@@ -27,6 +27,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.get('/', (req, res) => {
+  res.status(200).send('hi')
+})
+
 app.get('/getUser', (req, res) => {
   db.query(`SELECT * FROM User WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {

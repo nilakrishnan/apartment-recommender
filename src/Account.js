@@ -13,11 +13,11 @@ class Account extends React.Component {
 
   componentDidMount() {
     const { data } = this.props.location
-    fetch(`/getUser?userId=${data.email}`, {
+    fetch(`/getUser?UserId=${data.email}`, {
       method: 'GET',
     }).then(res => res.json())
     .then(user => {
-      if (!user[0]) {
+      if (user.length == 0) {
         fetch('/addUser', {
           method: 'POST',
           body: JSON.stringify({
@@ -28,16 +28,15 @@ class Account extends React.Component {
           headers: {
             "Content-type": "application/json; charset=UTF-8"
           }
-      }).then(res => res.text())
+        }).then(res => res.text())
         this.setState({
               email: data.email,
               firstName: data.firstName,
               lastName: data.lastName
         })
+        alert('added')
       } else {
         this.setState({
-          // this is for if there is already an account created
-          // we are saving that information
           email: user[0].UserId,
           firstName: user[0].FirstName,
           lastName: user[0].LastName
