@@ -27,10 +27,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => {
-  res.status(200).send('hi')
-})
-
 app.get('/getUser', (req, res) => {
   db.query(`SELECT * FROM User WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {
@@ -45,7 +41,7 @@ app.post('/addUser', (req, res) => {
     if (error) {
       throw error
     }
-    res.send('Added new user!')
+    res.send('Added user!')
   })
 })
 
@@ -65,7 +61,7 @@ app.post('/updateUser', (req, res) => {
       })
     }
   }
-  res.send("User updated!")
+  res.send("Updated user!")
 })
 
 app.post('/deleteUser', (req, res) => {
@@ -92,16 +88,23 @@ app.get('/getUserReview', (req, res) => {
 })
 
 app.post('/search', (req, res) => {
- db.query(`Select BuildingName From AptBuilding
- NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review
- WHERE Apartment.Price<= "${req.body.Price}" AND Amenities.Gym="${req.body.Gym}" AND Review.TransportationProximity >= "${req.body.TransportationProximity}"AND
- Review.GreenStProximityRating >= "${req.body.GreenStProximityRating}" AND NumBeds>= "${req.body.NumBeds}" AND
- NumBaths= "${req.body.NumBaths}" AND Amenities.Parking= "${req.body.Parking}" AND
- Amenities.Elevator>= "${req.body.Elevator}" AND Amenities.WasherDryer= "${req.body.WasherDryer}"
- AND Amenities.Internet= "${req.body.Internet}" AND Review.OverallRating>= "${req.body.OverallRating}"
- AND Review.WeekdayVolumeRating>= "${req.body.WeekdayVolumneRating}" AND Review.WeekendVolumeRating>= "${req.body.WeekendVolumeRating}"
- AND Review.SecurityDepositReturnedRating>= "${req.body.SecurityDepositReturnedRating}"
- AND Review.ResponsivenessRating>= "${req.body.ResponsivenessRating}"`, function (error, results, fields) {
+  let queryString = `SELECT Company FROM AptBuilding
+  NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
+
+  let attributes = req.body
+  Object.entries(attributes).forEach(([key,value]) => {
+    if (key === "Price") {
+      queryString += ` WHERE ${key}<=${value}`
+
+    } else if (value === 0 || value === 1 || key === "NumBeds" || key === "NumBaths") {
+      queryString += ` WHERE ${key}=${value}`
+
+    } else {
+      queryString += ` WHERE ${key}>=${value}`
+    }
+  })
+
+ db.query(queryString, function (error, results, fields) {
    if (error) {
      throw error;
    }
@@ -127,7 +130,7 @@ app.post('/addReview', (req, res) => {
     if (error) {
       throw error
     }
-    res.send('Added new review!')
+    res.send('Added review!')
   })
 })
 
@@ -183,7 +186,7 @@ app.post('/updateReview', (req, res) => {
       })
     }
   }
-  res.send("review updated!")
+  res.send("Updated review!")
 })
 
 app.post('/deleteReview', (req, res) => {
