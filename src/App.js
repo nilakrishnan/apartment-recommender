@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './Login.js'
 import Account from './Account.js'
-import Review from './Review.js'
+// import Search from './Search.js'
 
 export default class App extends React.Component {
   render() {
@@ -10,9 +10,10 @@ export default class App extends React.Component {
       <Router>
         <div className="App">
           <Switch>
+            <Route path="/" component={Login}/>
             <Route path="/login" component={Login}/>
             <Route path="/account" component={Account} />
-            <Route path="/account/review" component={Review} />
+            // <Route path="/search" component={Search} />
           </Switch>
         </div>
       </Router>

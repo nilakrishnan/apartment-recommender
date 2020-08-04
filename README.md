@@ -13,9 +13,9 @@ CS 411 Project
 	SQL_PASS='PASSWORD'
 	DATABASE='DATABASE_NAME'
 	```
-3. Setup sql databse to match schema described in db_setup.sql
+3. Setup sql database to match schema described in db_setup.sql
 
-4. Import CSV files in the /db_setup_csv folder
+4. Import CSV files in the /mysql folder
 
 	In MySQLWorkbench, click schemas->tables, right click on the table and select 'Table Data Import Wizard' and follow the steps to import the CSV file.
 
