@@ -49,7 +49,9 @@ class User extends React.Component {
     .then(res => res.text())
   }
 
-  handleDelete() {
+  handleDelete(e) {
+    e.preventDefault()
+
     fetch('/deleteUser', {
       method: 'POST',
       body: JSON.stringify({
@@ -75,7 +77,7 @@ class User extends React.Component {
           <p>Last Name
             <input type="text" name="LastName" value={this.state.lastName} onChange={this.handleLastChange}/>
           </p>
-          <button type="submit" value="Update">Update Update</button>
+          <button type="submit" value="Update">Update User</button>
           <button type="button" value="Delete" onClick={this.handleDelete}>Delete User</button>
       </form>
     );

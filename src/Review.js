@@ -6,7 +6,9 @@ class Review extends React.Component {
     this.handleDelete = this.handleDelete.bind(this)
   }
 
-  handleDelete() {
+  handleDelete(e) {
+    e.preventDefault();
+
     fetch('/deleteReview', {
       method: 'POST',
       body: JSON.stringify({
@@ -33,7 +35,7 @@ class Review extends React.Component {
         <p>Proximity to Public Transportation: {this.props.transport}</p>
         <p>Overall Rating: {this.props.overall}</p>
         <p>Description: {this.props.description}</p>
-        <button type="button" value="Delete" onClick={this.handleDelete}>Delete this review</button>
+        <button type="button" value="Delete" onClick={this.handleDelete}>Delete This Review</button>
         <hr class="solid"></hr>
       </div>
     );

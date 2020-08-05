@@ -157,7 +157,7 @@ app.get('/getRecommendations', (req, res) => {
 })
 
 app.post('/search', (req, res) => {
-  let selectFromString = `SELECT BuildingId, Address, Company, Price, NumBeds, NumBaths FROM AptBuilding NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
+  let selectFromString = `SELECT DISTINCT BuildingId, Address, Company, Price, NumBeds, NumBaths FROM AptBuilding NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
   let whereString = ''
 
   Object.entries(req.body).forEach(([key,value]) => {

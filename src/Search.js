@@ -8,11 +8,11 @@ class Search extends React.Component {
       price: '',
       numBeds: '',
       numBaths: '',
-      responsiveness: '',
-      security: '',
-      weekdayVolume: '',
-      weekendVolume: '',
-      greenStProximity: '',
+      responsivenessRating: '',
+      securityDepositReturnedRating: '',
+      weekdayVolumeRating: '',
+      weekendVolumeRating: '',
+      greenStProximityRating: '',
       transportationProximity: '',
       overallRating: '',
       isUpdated: true,
@@ -62,35 +62,35 @@ class Search extends React.Component {
 
   handleResponsiveness(e) {
     this.setState({
-      responsiveness: e.target.value
+      responsivenessRating: e.target.value
     })
     this.handleUpdate()
   }
 
   handleSecurity(e) {
     this.setState({
-      security: e.target.value
+      securityDepositReturnedRating: e.target.value
     })
     this.handleUpdate()
   }
 
   handleWeekday(e) {
     this.setState({
-      weekdayVolume: e.target.value
+      weekdayVolumeRating: e.target.value
     })
     this.handleUpdate()
   }
 
   handleWeekend(e) {
     this.setState({
-      weekendVolume: e.target.value
+      weekendVolumeRating: e.target.value
     })
     this.handleUpdate()
   }
 
   handleGreenStProx(e) {
     this.setState({
-      greenStProximity: e.target.value
+      greenStProximityRating: e.target.value
     })
     this.handleUpdate()
   }
@@ -150,19 +150,19 @@ class Search extends React.Component {
               <input type="text" value={this.state.numBaths} onChange={this.handleNumBaths}/>
             </p>
             <p>Responsiveness Rating
-              <input type="text" value={this.state.responsiveness} onChange={this.handleResponsiveness}/>
+              <input type="text" value={this.state.responsivenessRating} onChange={this.handleResponsiveness}/>
             </p>
             <p>Security Deposit Returned Rating
-              <input type="text" value={this.state.security} onChange={this.handleSecurity}/>
+              <input type="text" value={this.state.securityDepositReturnedRating} onChange={this.handleSecurity}/>
             </p>
             <p>Weekday Volume Rating
-              <input type="text" value={this.state.weekdayVolume} onChange={this.handleWeekday}/>
+              <input type="text" value={this.state.weekdayVolumeRating} onChange={this.handleWeekday}/>
             </p>
             <p>Weekend Volume Rating
-              <input type="text" value={this.state.weekendVolume} onChange={this.handleWeekend}/>
+              <input type="text" value={this.state.weekendVolumeRating} onChange={this.handleWeekend}/>
             </p>
             <p>Green St Proximity
-              <input type="text" value={this.state.greenStProximity} onChange={this.handleGreenStProx}/>
+              <input type="text" value={this.state.greenStProximityRating} onChange={this.handleGreenStProx}/>
             </p>
             <p>Transportation Proximity
               <input type="text" value={this.state.transportationProximity} onChange={this.handleTransportationProx}/>

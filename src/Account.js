@@ -1,6 +1,7 @@
 import React from 'react';
 import Apartment from './Apartment.js'
 import Review from './Review.js'
+import ReviewForm from './ReviewForm.js'
 import User from './User.js'
 
 class Account extends React.Component {
@@ -86,11 +87,16 @@ class Account extends React.Component {
   render() {
     return (
       <div className="Account">
+        <div className= "Profile">
+          <p>{this.state.firstName}</p>
+          <p>{this.state.lastName}</p>
+        </div>
         <User first={this.state.firstName} last={this.state.lastName} email={this.state.email}/>
         <hr class="solid"></hr>
+        <ReviewForm email={this.state.email} onReviewAdded={this.reloadReviews}/>
         <div className="Reviews">
         <p><b>Reviews you've left... </b></p>
-          {this.state.reviews.map(r => <Review address={r.Address} date={r.Date} response={r.ResponsivenessRating}
+          {this.state.reviews.map(r => <Review email={this.state.email} id={r.ReviewId} address={r.Address} date={r.Date} response={r.ResponsivenessRating}
             security={r.SecurityDepositReturnedRating} beds={r.NumBeds} baths={r.NumBeds} weekday={r.WeekdayVolumeRating} weekend={r.WeekendVolumeRating} green={r.GreenStProximityRating}
             transport={r.TransportationProximity} overall={r.OverallRating} description={r.Description}/>)}
         </div>
