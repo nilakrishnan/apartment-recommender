@@ -8,11 +8,12 @@ class Apartment extends React.Component {
   render() {
     return (
       <div className='Apartment'>
-        <p>{this.props.id}</p>
-        <p>{this.props.company}</p>
-        <p>{this.props.rent}</p>
-        <p>{this.props.beds}</p>
-        <p>{this.props.baths}</p>
+        <p>Leasing Company: {this.props.company}</p>
+        <p>Address: {this.props.address}</p>
+        <p>Rent: {this.props.rent}</p>
+        <p>Number of Bedrooms: {this.props.beds}</p>
+        <p>Number of Bathrooms: {this.props.baths}</p>
+        <hr class="solid"></hr>
       </div>
     );
   }

@@ -86,7 +86,7 @@ app.post('/deleteUser', (req, res) => {
 })
 
 app.get('/getReviews', (req, res) => {
-  db.query(`SELECT * FROM Review NATURAL JOIN User WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
+  db.query(`select * from Review natural join User natural join Apartment natural join AptBuilding where UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {
       throw error;
     }
@@ -148,7 +148,7 @@ app.post('/deleteReview', (req, res) => {
 
 
 app.get('/getRecommendations', (req, res) => {
-  db.query(`SELECT * FROM Recommendation WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
+  db.query(`SELECT * FROM Recommendation NATURAL JOIN Apartment NATURAL JOIN AptBuilding WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {
       throw error;
     }

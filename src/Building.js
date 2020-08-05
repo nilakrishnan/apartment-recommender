@@ -11,7 +11,8 @@ class Building extends React.Component {
   render() {
     return (
       <div className='Building'>
-        <p>{this.props.id}</p>
+        <p>{this.props.address}, {this.props.company}, {this.props.price}</p>
+        <hr class="solid"></hr>
       </div>
     );
   }

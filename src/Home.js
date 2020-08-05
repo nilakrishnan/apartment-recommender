@@ -26,11 +26,11 @@ class Home extends React.Component {
     return (
       <div className='Home'>
         <div className='login-link'>
-          <button type="button" value="Signup / Login" onClick={this.handleClickLogin}/>
+          <button type="button" value="Signup / Login" onClick={this.handleClickLogin}>Signup or Login</button>
         </div>
         <h1>Champaign Apartment Recommender!</h1>
         <div className='search-link'>
-          <button type="button" name="Search for Apartments" value="Search for Apartments" onClick={this.handleClickSearch}/>
+          <button type="button" name="Search for Apartments" value="Search for Apartments" onClick={this.handleClickSearch}>Search for Apartments</button>
         </div>
       </div>
     );

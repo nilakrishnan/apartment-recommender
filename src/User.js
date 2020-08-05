@@ -75,8 +75,8 @@ class User extends React.Component {
           <p>Last Name
             <input type="text" name="LastName" value={this.state.lastName} onChange={this.handleLastChange}/>
           </p>
-          <button type="submit" value="Update"/>
-          <button type="button" value="Delete" onClick={this.handleDelete}/>
+          <button type="submit" value="Update">Update Update</button>
+          <button type="button" value="Delete" onClick={this.handleDelete}>Delete User</button>
       </form>
     );
   }

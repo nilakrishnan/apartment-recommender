@@ -87,13 +87,17 @@ class Account extends React.Component {
     return (
       <div className="Account">
         <User first={this.state.firstName} last={this.state.lastName} email={this.state.email}/>
+        <hr class="solid"></hr>
         <div className="Reviews">
-          {this.state.reviews.map(r => <Review id={r.ReviewId} user={r.UserId} apt={r.AptId} date={r.Date} response={r.ResponsivenessRating}
-            security={r.SecurityDepositReturnedRating} weekday={r.WeekdayVolumeRating} weekend={r.WeekendVolumeRating} green={r.GreenStProximityRating}
+        <p><b>Reviews you've left... </b></p>
+          {this.state.reviews.map(r => <Review address={r.Address} date={r.Date} response={r.ResponsivenessRating}
+            security={r.SecurityDepositReturnedRating} beds={r.NumBeds} baths={r.NumBeds} weekday={r.WeekdayVolumeRating} weekend={r.WeekendVolumeRating} green={r.GreenStProximityRating}
             transport={r.TransportationProximity} overall={r.OverallRating} description={r.Description}/>)}
         </div>
         <div className="Recommendations">
-          {this.state.recommendations.map(r => <Apartment id={r.AptId} company={r.Company} rent={r.Price} beds={r.NumBeds} baths={r.NumBaths}/>)}
+          <hr class="solid"></hr>
+          <p><b>Our recommendations based on those reviews...</b></p>
+          {this.state.recommendations.map(r => <Apartment company={r.Company} address={r.Address} rent={r.Price} beds={r.NumBeds} baths={r.NumBaths}/>)}
         </div>
       </div>
     );

@@ -9,10 +9,14 @@ body, #root {
   background-color: #6E9BC3;
 }
 
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
 button {
   height: 2em;
-  width: 10em;
-  font-size: 2em;
+  width: 12em;
+  font-size: 1em;
   color: black;
 }
 
@@ -41,9 +45,9 @@ p > input {
 }
 
 .Account {
-  height: 30vh;
+  background-color: #6E9BC3;
 }
 
 .Search {
-
+  background-color: #6E9BC3;
 }

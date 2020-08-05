@@ -170,10 +170,12 @@ class Search extends React.Component {
             <p>Overall Rating
               <input type="text" value={this.state.overallRating} onChange={this.handleRating}/>
             </p>
-            <button type="submit" value="Submit"/>
+            <button type="submit" value="Submit">Search</button>
         </form>
         <div className="Results">
-          {this.state.isUpdated && this.state.results.map(b => <Building id={b.BuildingId}/>)}
+          <hr class="solid"></hr>
+          {this.state.isUpdated && this.state.results.map(b =>
+            <Building address={b.Address} company={b.Company} price={b.Price}/>)}
         </div>
       </div>
 

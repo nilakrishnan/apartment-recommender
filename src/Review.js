@@ -22,20 +22,19 @@ class Review extends React.Component {
   render() {
     return (
       <div className='Review'>
-        <p>{this.props.id}</p>
-        <p>{this.props.user}</p>
-        <p>{this.props.apt}</p>
-        <p>{this.props.date}</p>
-        <p>{this.props.baths}</p>
-        <p>{this.props.response}</p>
-        <p>{this.props.security}</p>
-        <p>{this.props.weekday}</p>
-        <p>{this.props.weekend}</p>
-        <p>{this.props.green}</p>
-        <p>{this.props.transport}</p>
-        <p>{this.props.overall}</p>
-        <p>{this.props.description}</p>
-        <button type="button" value="Delete" onClick={this.handleDelete}/>
+        <p>Address: {this.props.address}</p>
+        <p>Number of Bedrooms: {this.props.beds}</p>
+        <p>Number of Bathrooms: {this.props.baths}</p>
+        <p>Responsiveness: {this.props.response}</p>
+        <p>Security: {this.props.security}</p>
+        <p>Weekday Volume: {this.props.weekday}</p>
+        <p>Weekend Volume: {this.props.weekend}</p>
+        <p>Proximity to Green Street: {this.props.green}</p>
+        <p>Proximity to Public Transportation: {this.props.transport}</p>
+        <p>Overall Rating: {this.props.overall}</p>
+        <p>Description: {this.props.description}</p>
+        <button type="button" value="Delete" onClick={this.handleDelete}>Delete this review</button>
+        <hr class="solid"></hr>
       </div>
     );
   }
