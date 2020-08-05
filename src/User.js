@@ -46,7 +46,7 @@ class User extends React.Component {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(res => res.text())
+    .then(res => res.text()).then(text => alert(text))
   }
 
   handleDelete(e) {
@@ -61,7 +61,7 @@ class User extends React.Component {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(res => res.text())
+    .then(res => res.text()).then(text => alert(text))
 
     this.props.history.push({
       pathname: '/',

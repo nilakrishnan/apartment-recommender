@@ -173,7 +173,7 @@ app.post('/search', (req, res) => {
   })
 
   if (whereString.length != 0) {
-    whereString = ` WHERE ${whereString.slice(5)}`
+    whereString = ` WHERE ${whereString.slice(5)} GROUP BY Company ORDER BY Price ASC`
   }
 
   db.query(selectFromString + whereString, function (error, results, fields) {

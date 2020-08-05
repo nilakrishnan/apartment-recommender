@@ -102,7 +102,7 @@ class ReviewForm extends React.Component {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(res => res.text())
+    .then(res => res.text()).then(text => alert(text))
   }
 
   render() {
