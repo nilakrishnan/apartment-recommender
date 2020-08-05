@@ -3,6 +3,20 @@ import React from 'react';
 class Review extends React.Component {
   constructor(props) {
     super(props);
+    this.handleDelete = this.handleDelete.bind(this)
+  }
+
+  handleDelete() {
+    fetch('/deleteReview', {
+      method: 'POST',
+      body: JSON.stringify({
+        "ReviewId": this.props.id
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(res => res.text())
   }
 
   render() {
@@ -21,6 +35,7 @@ class Review extends React.Component {
         <p>{this.props.transport}</p>
         <p>{this.props.overall}</p>
         <p>{this.props.description}</p>
+        <button type="button" value="Delete" onClick={this.handleDelete}/>
       </div>
     );
   }

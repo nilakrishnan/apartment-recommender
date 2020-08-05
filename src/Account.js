@@ -1,6 +1,7 @@
 import React from 'react';
 import Apartment from './Apartment.js'
 import Review from './Review.js'
+import User from './User.js'
 
 class Account extends React.Component {
   constructor(props) {
@@ -85,11 +86,7 @@ class Account extends React.Component {
   render() {
     return (
       <div className="Account">
-        <div className="Profile">
-          <p>{this.state.email}</p>
-          <p>{this.state.firstName}</p>
-          <p>{this.state.lastName}</p>
-        </div>
+        <User first={this.state.firstName} last={this.state.lastName} email={this.state.email}/>
         <div className="Reviews">
           {this.state.reviews.map(r => <Review id={r.ReviewId} user={r.UserId} apt={r.AptId} date={r.Date} response={r.ResponsivenessRating}
             security={r.SecurityDepositReturnedRating} weekday={r.WeekdayVolumeRating} weekend={r.WeekendVolumeRating} green={r.GreenStProximityRating}
