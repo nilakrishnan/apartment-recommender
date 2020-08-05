@@ -1,4 +1,5 @@
 import React from 'react';
+import Building from './Building.js'
 
 class Account extends React.Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Account extends React.Component {
       email: '',
       firstName: '',
       lastName: '',
+      recommendations: []
     };
     this.componentDidMount = this.componentDidMount.bind(this);
   }
@@ -50,6 +52,21 @@ class Account extends React.Component {
         })
       }
     })
+
+    alert('here')
+    fetch(`/getRecommendations?UserId=${data.email}`, {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(res => res.json())
+    .then(list => {
+      alert(list.length)
+      this.setState({
+        recommendations: list
+      })
+    })
   }
 
   render() {
@@ -61,6 +78,9 @@ class Account extends React.Component {
           <p>{this.state.lastName}</p>
         </div>
         <div className="Review">
+        </div>
+        <div className="Recommendations">
+          {this.state.recommendations.map(r => <Building id={r.AptId}/>)}
         </div>
       </div>
     );

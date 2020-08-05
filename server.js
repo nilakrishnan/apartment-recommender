@@ -37,25 +37,33 @@ app.get('/getUser', (req, res) => {
 })
 
 app.post('/addUser', (req, res) => {
-  db.query(`INSERT INTO User(UserId, FirstName, LastName) VALUES
-  ('${req.body.UserId}', '${req.body.FirstName}', '${req.body.LastName}')`, function (error, results, fields) {
-    if (error) {
-      throw error
-    }
-    res.send('Added user!')
-  })
+  db.query(`INSERT INTO User (UserId, FirstName, LastName)
+  SELECT "${req.body.UserId}","${req.body.FirstName}","${req.body.LastName}"
+  FROM User
+  WHERE NOT EXISTS (SELECT "${req.body.UserId}" FROM User WHERE UserId = "${req.body.UserId}")
+  LIMIT 1;`, function (error, results, fields) {
+    if (error) {
+      throw error
+    }
+    res.send('Added new user!')
+  })
 })
 
 app.post('/updateUser', (req, res) => {
-  let queryString = `UPDATE User `
+  let selectFromString = `UPDATE User`
+  let setString = ''
 
   Object.entries(req.body).forEach(([key,value]) => {
     if (key != 'UserId') {
-      queryString += `SET ${key}='${value}'`
+      setString += ` , ${key}='${value}'`
     }
   })
 
-  db.query(`${queryString} WHERE UserId='${req.body.UserId}'` , function (error, results, fields) {
+  if (setString.length != 0) {
+    setString = `SET ${setString.slice(3)}`
+  }
+
+  db.query(`${selectFromString} ${setString} WHERE UserId='${req.body.UserId}'` , function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -123,7 +131,7 @@ app.post('/updateReview', (req, res) => {
 })
 
 app.post('/deleteReview', (req, res) => {
-  db.query(`DELETE From Review WHERE ReviewId = ${req.body.ReviewId}`, function (error, results, fields) {
+  db.query(`DELETE From Review WHERE ReviewId = '${req.body.ReviewId}'`, function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -131,27 +139,41 @@ app.post('/deleteReview', (req, res) => {
   })
 })
 
-app.post('/search', (req, res) => {
-  let queryString = `SELECT DISTINCT Company FROM AptBuilding
-  NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
 
-  Object.entries(req.body).forEach(([key,value]) => {
-    if (key === 'Price') {
-      queryString += ` WHERE ${key}<=${value}`
-
-    } else if (value === 0 || value === 1 || key === 'NumBeds' || key === 'NumBaths') {
-      queryString += ` WHERE ${key}=${value}`
-
-    } else {
-    queryString += ` WHERE ${key}>=${value}`
-    }
-  })
-
-  db.query(queryString, function (error, results, fields) {
+app.get('/getRecommendations', (req, res) => {
+  db.query(`SELECT * FROM Recommendation WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {
       throw error;
     }
-    res.send(results)
+    res.status(200).json(results)
+  })
+})
+
+app.post('/search', (req, res) => {
+  let selectFromString = `SELECT DISTINCT BuildingId FROM AptBuilding NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
+  let whereString = ''
+
+  Object.entries(req.body).forEach(([key,value]) => {
+    if (key === 'Price') {
+      whereString += ` AND ${key}<=${value}`
+
+    } else if (value === 0 || value === 1 || key === 'NumBeds' || key === 'NumBaths') {
+      whereString += ` AND ${key}=${value}`
+
+    } else {
+      whereString += ` AND ${key}>=${value}`
+    }
+  })
+
+  if (whereString.length != 0) {
+    whereString = ` WHERE ${whereString.slice(5)}`
+  }
+
+  db.query(selectFromString + whereString, function (error, results, fields) {
+    if (error) {
+      throw error;
+    }
+    res.json(results)
   })
 });
 

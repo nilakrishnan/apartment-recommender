@@ -19,7 +19,7 @@ CS 411 Project
 
 	In MySQLWorkbench, click schemas->tables, right click on the table and select 'Table Data Import Wizard' and follow the steps to import the CSV file.
 
-	IMPORTANT: the order for importing the CSV files is building -> apartment -> amenities -> user -> review
+	IMPORTANT: the order for importing the CSV files is building -> apartment -> amenities -> user -> review -> recommendation
 
 5. Start the server by running the following command:
 	```

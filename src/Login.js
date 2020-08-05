@@ -53,7 +53,7 @@ class Login extends React.Component {
           <p>Last Name
             <input type="text" name="LastName" value={this.state.lastName} onChange={this.handleLastChange}/>
           </p>
-          <button type="submit" name="Signup/Login" value="Submit"/>
+          <button type="submit" value="Signup / Login"/>
       </form>
     );
   }
