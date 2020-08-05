@@ -1,5 +1,6 @@
 import React from 'react';
-import Building from './Building.js'
+import Apartment from './Apartment.js'
+import Review from './Review.js'
 
 class Account extends React.Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class Account extends React.Component {
       email: '',
       firstName: '',
       lastName: '',
+      reviews: [],
       recommendations: []
     };
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -53,7 +55,19 @@ class Account extends React.Component {
       }
     })
 
-    alert('here')
+    fetch(`/getReviews?UserId=${data.email}`, {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(res => res.json())
+    .then(list => {
+      this.setState({
+        reviews: list
+      })
+    })
+
     fetch(`/getRecommendations?UserId=${data.email}`, {
       method: 'GET',
       headers: {
@@ -62,7 +76,6 @@ class Account extends React.Component {
     })
     .then(res => res.json())
     .then(list => {
-      alert(list.length)
       this.setState({
         recommendations: list
       })
@@ -77,10 +90,13 @@ class Account extends React.Component {
           <p>{this.state.firstName}</p>
           <p>{this.state.lastName}</p>
         </div>
-        <div className="Review">
+        <div className="Reviews">
+          {this.state.reviews.map(r => <Review id={r.ReviewId} user={r.UserId} apt={r.AptId} date={r.Date} response={r.ResponsivenessRating}
+            security={r.SecurityDepositReturnedRating} weekday={r.WeekdayVolumeRating} weekend={r.WeekendVolumeRating} green={r.GreenStProximityRating}
+            transport={r.TransportationProximity} overall={r.OverallRating} description={r.Description}/>)}
         </div>
         <div className="Recommendations">
-          {this.state.recommendations.map(r => <Building id={r.AptId}/>)}
+          {this.state.recommendations.map(r => <Apartment id={r.AptId} company={r.Company} rent={r.Price} beds={r.NumBeds} baths={r.NumBaths}/>)}
         </div>
       </div>
     );

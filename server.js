@@ -85,7 +85,7 @@ app.post('/deleteUser', (req, res) => {
   })
 })
 
-app.get('/getReview', (req, res) => {
+app.get('/getReviews', (req, res) => {
   db.query(`SELECT * FROM Review NATURAL JOIN User WHERE UserId = '${req.query.UserId}'`, function (error, results, fields) {
     if (error) {
       throw error;
@@ -116,13 +116,20 @@ app.post('/addReview', (req, res) => {
 })
 
 app.post('/updateReview', (req, res) => {
-  let queryString = `UPDATE Review`
+  let selectFromString = `UPDATE Review`
+  let setString = ''
 
   Object.entries(req.body).forEach(([key,value]) => {
-    queryString += `SET ${key}=${value}`
+    if (key != 'ReviewId') {
+      setString += ` , ${key}='${value}'`
+    }
   })
 
-  db.query(queryString, function (error, results, fields) {
+  if (setString.length != 0) {
+    setString = `SET ${setString.slice(3)}`
+  }
+
+  db.query(`${selectFromString} ${setString} WHERE ReviewId='${req.body.ReviewId}'` , function (error, results, fields) {
     if (error) {
       throw error
     }
@@ -150,7 +157,7 @@ app.get('/getRecommendations', (req, res) => {
 })
 
 app.post('/search', (req, res) => {
-  let selectFromString = `SELECT DISTINCT BuildingId FROM AptBuilding NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
+  let selectFromString = `SELECT BuildingId, Address, Company, Price, NumBeds, NumBaths FROM AptBuilding NATURAL JOIN Apartment NATURAL JOIN Amenities NATURAL JOIN Review`
   let whereString = ''
 
   Object.entries(req.body).forEach(([key,value]) => {
